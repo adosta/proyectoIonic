@@ -7,24 +7,30 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class CrudService {
 
-  constructor(
-    private firestore: AngularFirestore
-  ) { }
+  constructor(private firestore: AngularFirestore) { }
 
-
-  create_NewStudent(record) {
+  /*create_NewStudent(record) {
     return this.firestore.collection('Students').add(record);
   }
-
   read_Players() {
     return this.firestore.collection('jugadores').snapshotChanges();
   }
-
   update_Student(recordID,record){
     this.firestore.doc('Students/' + recordID).update(record);
   }
-
   delete_Student(record_id) {
     this.firestore.doc('Students/' + record_id).delete();
+  }*/
+
+  read_Divisions() {
+    return this.firestore.collection('divisiones').snapshotChanges();
+  }
+  
+  read_Teams(division) {
+    return this.firestore.collection('equipos', ref => ref.where('division', '==', division)).snapshotChanges();
+  }
+
+  read_Players(equipo) {
+    return this.firestore.collection('jugadores', ref => ref.where('equipos', 'array-contains', equipo)).snapshotChanges();
   }
 }

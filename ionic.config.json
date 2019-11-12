@@ -1,6 +1,8 @@
 {
   "name": "proyectoIonic",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "0259f918"
 }

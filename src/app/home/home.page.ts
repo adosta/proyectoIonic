@@ -10,27 +10,17 @@ import { CrudService } from './../services/crud.service';
 
 export class HomePage implements OnInit {
 
-  players: any;
-  studentName: string;
-  studentAge: number;
-  studentAddress: string;
+  Divisions:any;
 
   constructor(private crudService: CrudService) { }
 
   ngOnInit() {
-    this.crudService.read_Players().subscribe(data => {
- 
-      this.players = data.map(e => {
+    this.crudService.read_Divisions().subscribe(data => {
+      this.Divisions = data.map(e => {
         return {
-          id: e.payload.doc.id,
-          isEdit: false,
           Nombre: e.payload.doc.data()['nombre'],
-          PrimerApellido: e.payload.doc.data()['primerApellido'],
-          SegundoApellido: e.payload.doc.data()['segundoApellido'],
         };
       })
-      console.log(this.players);
- 
     });
   }
 

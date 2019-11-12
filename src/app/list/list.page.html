@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Prueba
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col size="6">
+      <div>
+        <ion-label>Equipo 1</ion-label>
+        <ion-select [(ngModel)]="equipo1" placeholder="Elija un equipo" (ionChange)="getPlayers(equipo1,'a')">
+          <ion-select-option [disabled]="team.Equipo === equipo2" *ngFor="let team of Teams" value="{{team.Equipo}}">{{team.Equipo}}</ion-select-option>
+        </ion-select>
+        <ion-list>
+          <ion-item *ngFor="let player1 of Players1" (click)="presentModal(player1.Nombre)" >
+            <ion-label>{{player1.Nombre}}</ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-col>
+    <ion-col size="6">
+      <div>
+        <ion-label>Equipo 2</ion-label>
+        <ion-select [(ngModel)]="equipo2" placeholder="Elija un equipo" (ionChange)="getPlayers(equipo2,'b')">
+          <ion-select-option [disabled]="team.Equipo === equipo1" *ngFor="let team of Teams" 
+            value="{{team.Equipo}}">{{team.Equipo}}
+          </ion-select-option>
+        </ion-select>
+        <ion-list>
+          <ion-item *ngFor="let player2 of Players2" (click)="presentModal(player2.Nombre)" >
+            <ion-label>{{player2.Nombre}}</ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-button *ngIf="equipo1 == 'alfa'">Prueba</ion-button>
+</ion-content>
