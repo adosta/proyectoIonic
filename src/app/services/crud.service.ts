@@ -7,6 +7,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class CrudService {
 
+  d = new Date;
+
   constructor(private firestore: AngularFirestore) { }
 
   /*create_NewStudent(record) {
@@ -30,7 +32,34 @@ export class CrudService {
     return this.firestore.collection('equipos', ref => ref.where('division', '==', division)).snapshotChanges();
   }
 
+  /*read_Players(equipo) {
+    return this.firestore.collection('jugadores', ref => 
+    ref.where('equipos', 'array-contains', equipo)).snapshotChanges();
+  }*/
+
   read_Players(equipo) {
-    return this.firestore.collection('jugadores', ref => ref.where('equipos', 'array-contains', equipo)).snapshotChanges();
+    return this.firestore.collection('equipos', ref => 
+    ref.where('nombre', '==', equipo)).snapshotChanges();
+  };
+
+  create_NewEvent(record) {
+    return this.firestore.collection('faltasPuntos').add(record);
   }
+
+  read_Events(){
+    return this.firestore.collection('faltasPuntos', ref => 
+    ref.where('fecha', '==', this.d.getDate() +"-"+ 
+    (this.d.getMonth() + 1) +"-"+ this.d.getFullYear())).snapshotChanges();
+  }
+  read_PlayerEvents(nombre){
+    return this.firestore.collection('faltasPuntos', ref => 
+    ref.where('fecha', '==', this.d.getDate() +"-"+ 
+    (this.d.getMonth() + 1) +"-"+ this.d.getFullYear()).where('jugador','==',nombre)).snapshotChanges();
+  }
+
+  /*read_PlayerEvents(nombre){
+    return this.firestore.collection('faltasPuntos', ref => 
+    ref.where('fecha', '==', this.d.getDate() +"-"+ 
+    (this.d.getMonth() + 1) +"-"+ this.d.getFullYear()).where('jugador','==',['Arturo', 'Alfredo'])).snapshotChanges();
+  }*/
 }

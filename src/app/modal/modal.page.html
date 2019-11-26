@@ -5,6 +5,10 @@
 </ion-header>
 
 <ion-content>
-  <ion-button (click)="createEvent()">Crear</ion-button>
+  <ion-list>
+    <ion-item *ngFor="let Event of Events">
+      <ion-label>{{Event.Jugador}}</ion-label>
+    </ion-item>
+  </ion-list>
   <ion-button (click)="dismiss()">Cerrar</ion-button>
 </ion-content>

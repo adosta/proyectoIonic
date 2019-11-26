@@ -16,9 +16,11 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
+import { EventsComponent } from './events/events.component';
+
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent,EventsComponent],
+  entryComponents: [EventsComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
