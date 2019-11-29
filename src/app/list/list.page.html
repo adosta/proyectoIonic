@@ -1,13 +1,41 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Juego
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-row>
+  <ion-col size="5">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+  </ion-col>
+  <ion-col size="1">
+    <ion-header>
+      <ion-toolbar  color="dark">
+        <ion-title class="letras">
+          3
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+  </ion-col>
+  <ion-col size="1">
+    <ion-header>
+      <ion-toolbar color="dark">
+        <ion-title class="letras" >
+          4
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+  </ion-col>
+  <ion-col size="5">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+  </ion-col>
+</ion-row>
 
 <ion-content>
-  <ion-button (click)="presentModal()">Historial</ion-button>
   <ion-row>
     <ion-col size="6">
       <div>
@@ -16,10 +44,6 @@
           <ion-select-option [disabled]="team.Equipo === equipo2" *ngFor="let team of Teams" value="{{team.Equipo}}">{{team.Equipo}}</ion-select-option>
         </ion-select>
         <ion-list>
-          <!--<ion-item *ngFor="let player1 of Players1" (click)="presentModal(player1.Nombre)" >-->
-          <!--<ion-item *ngFor="let player1 of Players1" (click)="presentAlert(player1.Nombre)" >
-            <ion-label>{{player1.jugadores[0]}}</ion-label>
-          </ion-item>-->
           <ng-container *ngFor="let player1 of Players1"> 
             <ion-item-divider>Entrenador</ion-item-divider>
             <ion-item>
@@ -27,8 +51,8 @@
             </ion-item>
               
             <ion-item-divider>Jugadores</ion-item-divider>
-            <ion-item *ngFor="let jug of player1.jugadores; let i = index" (click)="presentAlert(jug,badge.el.id)" >
-              <ion-label id="{{jug}}">{{jug}} <ion-badge #badge id="1badge{{i}}" color="primary">0</ion-badge></ion-label>
+            <ion-item *ngFor="let jug of player1.jugadores; let i = index" (click)="presentAlert(jug,equipo1,pb.el.id)" >
+              <ion-label id="{{jug}}">{{jug}} <ion-badge #pb id="1per{{i}}" color="primary">0</ion-badge><ion-badge #bt id="1tec{{i}}" color="warning">0</ion-badge></ion-label>
             </ion-item>
           </ng-container>
         </ion-list>
@@ -44,17 +68,14 @@
           </ion-select-option>
         </ion-select>
         <ion-list>
-          <!--<ion-item *ngFor="let player2 of Players2" (click)="presentAlert(player2.Nombre)" >
-            <ion-label>{{player2.Nombre}}</ion-label>
-          </ion-item>-->
           <ng-container *ngFor="let player2 of Players2"> 
             <ion-item-divider>Entrenador</ion-item-divider>
             <ion-item>
               <ion-label>{{player2.Entrenador}}</ion-label>
             </ion-item>
             <ion-item-divider>Jugadores</ion-item-divider>
-            <ion-item *ngFor="let jug of player2.jugadores; let i = index" (click)="presentAlert(jug,badge.el.id)" >
-              <ion-label id="{{jug}}">{{jug}} <ion-badge #badge id="2badge{{i}}" color="primary">0</ion-badge></ion-label>
+            <ion-item *ngFor="let jug of player2.jugadores; let i = index" (click)="presentAlert(jug,equipo2,pb.el.id)" >
+              <ion-label id="{{jug}}">{{jug}} <ion-badge #pb id="2per{{i}}" color="primary">0</ion-badge><ion-badge #bt id="2tec{{i}}" color="warning">0</ion-badge></ion-label>
             </ion-item>
           </ng-container>
         </ion-list>
@@ -63,3 +84,9 @@
   </ion-row>
   <ion-button *ngIf="equipo1 == 'alfa'">Prueba</ion-button>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-button color="primary" (click)="presentModal()" expand="block">Historial</ion-button>
+  </ion-toolbar>
+</ion-footer>

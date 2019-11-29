@@ -23,6 +23,7 @@ export class ListPage implements OnInit {
 
   d = new Date;
   cont: number = 0;
+  cont2: number = 0;
 
   playerEvents: any;
 
@@ -42,9 +43,7 @@ export class ListPage implements OnInit {
           Equipo: e.payload.doc.data()['nombre'],
         };
       })
-      console.log(this.Teams);
     });
-    
   }
 
   async presentModal() {
@@ -58,7 +57,8 @@ export class ListPage implements OnInit {
     await modal.present();
   }
 
-  async presentAlert(name,badge) {
+  async presentAlert(name,equipo,badge) {
+    console.log(equipo);
     const alert = await this.alert.create({
       header: 'Confirmacion',
       message: name,
@@ -72,6 +72,41 @@ export class ListPage implements OnInit {
             type:'radio',
             label:'2P',
             value:'2p'
+        },
+        {
+          type:'radio',
+          label:'3P',
+          value:'3p'
+        },
+        {
+          type:'radio',
+          label:'P1',
+          value:'p1'
+        },
+        {
+          type:'radio',
+          label:'P2',
+          value:'p2'
+        },
+        {
+          type:'radio',
+          label:'T',
+          value:'t'
+        },
+        {
+          type:'radio',
+          label:'U2',
+          value:'u2'
+        },
+        {
+          type:'radio',
+          label:'D',
+          value:'d'
+        },
+        {
+          type:'radio',
+          label:'F',
+          value:'f'
         }],
       buttons: [
         {
@@ -83,6 +118,7 @@ export class ListPage implements OnInit {
             (this.d.getMonth() + 1) +"-"+ this.d.getFullYear()),
             Event['jugador'] = name;
             Event['tipo'] = alert;
+            Event['equipo'] = equipo;
             this.crudService.create_NewEvent(Event);
           }
         },
@@ -130,10 +166,23 @@ export class ListPage implements OnInit {
           }
         })
         this.cont=0;
+        this.cont2=0;
         this.playerEvents.forEach(element => {
-          let h = document.getElementById(element.jugador).lastChild;
-          this.cont++;
-          h.textContent = this.cont.toString();
+          if(element.tipo == "p1" || element.tipo == "p2")
+          {
+            let h = document.getElementById(element.jugador).firstChild.nextSibling;
+            this.cont++;
+            h.textContent = this.cont.toString();
+          }
+          if(element.tipo == "t" || element.tipo == "u2"){
+            console.log(element.jugador)
+            let h1 = document.getElementById(element.jugador).firstChild.nextSibling;
+            let h2 = document.getElementById(element.jugador).lastChild;
+            this.cont++;
+            h1.textContent = this.cont.toString();
+            this.cont2++;
+            h2.textContent = this.cont2.toString();
+          }
         });
       })
     })

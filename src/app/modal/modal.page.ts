@@ -25,7 +25,6 @@ export class ModalPage implements OnInit {
           Tipo: e.payload.doc.data()['tipo'],
         };
       })
-      //console.log(this.Events);
     })
   }
 

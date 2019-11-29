@@ -51,15 +51,10 @@ export class CrudService {
     ref.where('fecha', '==', this.d.getDate() +"-"+ 
     (this.d.getMonth() + 1) +"-"+ this.d.getFullYear())).snapshotChanges();
   }
+
   read_PlayerEvents(nombre){
     return this.firestore.collection('faltasPuntos', ref => 
     ref.where('fecha', '==', this.d.getDate() +"-"+ 
     (this.d.getMonth() + 1) +"-"+ this.d.getFullYear()).where('jugador','==',nombre)).snapshotChanges();
   }
-
-  /*read_PlayerEvents(nombre){
-    return this.firestore.collection('faltasPuntos', ref => 
-    ref.where('fecha', '==', this.d.getDate() +"-"+ 
-    (this.d.getMonth() + 1) +"-"+ this.d.getFullYear()).where('jugador','==',['Arturo', 'Alfredo'])).snapshotChanges();
-  }*/
 }
