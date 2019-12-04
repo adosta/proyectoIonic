@@ -57,4 +57,10 @@ export class CrudService {
     ref.where('fecha', '==', this.d.getDate() +"-"+ 
     (this.d.getMonth() + 1) +"-"+ this.d.getFullYear()).where('jugador','==',nombre)).snapshotChanges();
   }
+
+  read_TeamScore(equipo){
+    return this.firestore.collection('faltasPuntos', ref => 
+    ref.where('fecha', '==', this.d.getDate() +"-"+ 
+    (this.d.getMonth() + 1) +"-"+ this.d.getFullYear()).where('equipo','==',equipo)).snapshotChanges();
+  }
 }

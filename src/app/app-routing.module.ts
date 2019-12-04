@@ -5,7 +5,10 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)},
   { path: 'list/:div', loadChildren: './list/list.module#ListPageModule' },
-  { path: 'modal', loadChildren: './modal/modal.module#ModalPageModule' },
+  { path: 'modal', loadChildren: './modal/modal.module#ModalPageModule' },  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+  { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
+  { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardPageModule' },
+
 
 ];
 

@@ -24,8 +24,17 @@ export class ListPage implements OnInit {
   d = new Date;
   cont: number = 0;
   cont2: number = 0;
+  cont3: number = 0;
 
   playerEvents: any;
+
+  points: any;
+
+  equipo1: any;
+  equipo2: any;
+
+  pl1 = [];
+  pl2 = [];
 
   constructor(
     private crudService: CrudService,
@@ -44,6 +53,7 @@ export class ListPage implements OnInit {
         };
       })
     });
+
   }
 
   async presentModal() {
@@ -140,18 +150,25 @@ export class ListPage implements OnInit {
             Entrenador: e.payload.doc.data()['entrenador']
           };
         })
+        this.Players1[0].jugadores.forEach(element => {
+          this.pl1.push({name:element,selected:false})
+        });
+        console.log(this.Players1)
         this.playersLoop(this.Players1);
-        
+        this.getScores(team);
       }
       else{
-        console.log("test");
         this.Players2 = data.map(e => {
           return {
             jugadores: e.payload.doc.data()['jugadores'],
             Entrenador: e.payload.doc.data()['entrenador']
           };
         })
+        this.Players2[0].jugadores.forEach(element => {
+          this.pl2.push({name:element,selected:false})
+        });
         this.playersLoop(this.Players2);
+        this.getScores(team);
       }
     }); 
   }
@@ -167,25 +184,69 @@ export class ListPage implements OnInit {
         })
         this.cont=0;
         this.cont2=0;
+        this.cont3=0;
         this.playerEvents.forEach(element => {
-          if(element.tipo == "p1" || element.tipo == "p2")
+          if(element.tipo == "1p" || element.tipo == "2p"|| element.tipo == "3p")
           {
-            let h = document.getElementById(element.jugador).firstChild.nextSibling;
+            console.log(element.jugador);
+            let h = document.getElementById(element.jugador).firstChild.firstChild.nextSibling;
+            console.log(h);
             this.cont++;
             h.textContent = this.cont.toString();
           }
+          if(element.tipo == "p1" || element.tipo == "p2")
+          {
+            let h = document.getElementById(element.jugador).firstChild.firstChild.nextSibling.nextSibling;
+            this.cont2++;
+            h.textContent = this.cont2.toString();
+          }
           if(element.tipo == "t" || element.tipo == "u2"){
             console.log(element.jugador)
-            let h1 = document.getElementById(element.jugador).firstChild.nextSibling;
-            let h2 = document.getElementById(element.jugador).lastChild;
-            this.cont++;
-            h1.textContent = this.cont.toString();
+            let h1 = document.getElementById(element.jugador).firstChild.firstChild.nextSibling.nextSibling;
+            let h2 = document.getElementById(element.jugador).firstChild.firstChild.nextSibling.nextSibling.nextSibling;
             this.cont2++;
-            h2.textContent = this.cont2.toString();
+            h1.textContent = this.cont2.toString();
+            this.cont3++;
+            h2.textContent = this.cont3.toString();
           }
         });
       })
     })
   }
+  
+  getScores(equipo){
+    this.crudService.read_TeamScore(equipo).subscribe(data => {
+      this.points = data.map(e=>{
+        return{
+          Tipo: e.payload.doc.data()['tipo'],
+        }
+      })
+      this.cont=0;
+      let t = document.getElementById(equipo);
+      console.log(t);
+      this.points.forEach(element => {
+          if (element.Tipo == "1p") {
+            this.cont++;
+            t.textContent = this.cont.toString();
+            //t.textContent = "1"
+          }
+          if (element.Tipo == "2p") {
+            this.cont+=2;
+            t.textContent = this.cont.toString();
+            //t.textContent = "1"
+          }
+          if (element.Tipo == "3p") {
+            this.cont+=3;
+            t.textContent = this.cont.toString();
+            //t.textContent = "1"
+          }
+      });
+    })
+  }
 
+  getChecked(){
+    console.log(this.pl1);
+    console.log(this.pl2);
+  }
+      
 }
