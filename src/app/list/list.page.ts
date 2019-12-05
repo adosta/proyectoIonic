@@ -8,6 +8,7 @@ import { ModalPage } from '../modal/modal.page';
 import {ActivatedRoute} from '@angular/router';
 
 import { PopoverController } from '@ionic/angular';
+import { Key } from 'protractor';
 
 @Component({
   selector: 'app-list',
@@ -68,7 +69,6 @@ export class ListPage implements OnInit {
   }
 
   async presentAlert(name,equipo,badge) {
-    console.log(equipo);
     const alert = await this.alert.create({
       header: 'Confirmacion',
       message: name,
@@ -153,7 +153,6 @@ export class ListPage implements OnInit {
         this.Players1[0].jugadores.forEach(element => {
           this.pl1.push({name:element,selected:false})
         });
-        console.log(this.Players1)
         this.playersLoop(this.Players1);
         this.getScores(team);
       }
@@ -188,9 +187,7 @@ export class ListPage implements OnInit {
         this.playerEvents.forEach(element => {
           if(element.tipo == "1p" || element.tipo == "2p"|| element.tipo == "3p")
           {
-            console.log(element.jugador);
             let h = document.getElementById(element.jugador).firstChild.firstChild.nextSibling;
-            console.log(h);
             this.cont++;
             h.textContent = this.cont.toString();
           }
@@ -201,7 +198,6 @@ export class ListPage implements OnInit {
             h.textContent = this.cont2.toString();
           }
           if(element.tipo == "t" || element.tipo == "u2"){
-            console.log(element.jugador)
             let h1 = document.getElementById(element.jugador).firstChild.firstChild.nextSibling.nextSibling;
             let h2 = document.getElementById(element.jugador).firstChild.firstChild.nextSibling.nextSibling.nextSibling;
             this.cont2++;
@@ -223,7 +219,6 @@ export class ListPage implements OnInit {
       })
       this.cont=0;
       let t = document.getElementById(equipo);
-      console.log(t);
       this.points.forEach(element => {
           if (element.Tipo == "1p") {
             this.cont++;
@@ -245,8 +240,41 @@ export class ListPage implements OnInit {
   }
 
   getChecked(){
+    /*console.log(this.equipo1);
+    console.log(this.equipo2);
     console.log(this.pl1);
-    console.log(this.pl2);
+    console.log(this.pl2);*/
+    let i:number = 0;
+    let obj1 = {};
+    let t1:string[]=[];
+    let t2:string[]=[];
+
+    let equipo1=this.equipo1;
+
+    this.pl1.forEach(element => {
+      if (element.selected == true) {
+        t1.push(element.name);
+      }
+    });
+
+    this.pl2.forEach(element => {
+      if (element.selected == true) {
+        t2.push(element.name);
+      }
+    });
+
+    console.log(t2);
+
+    let e1 = this.equipo1;
+
+    let Match= {};
+    Match['fecha'] = 
+      (this.d.getDate() +"-"+ 
+      (this.d.getMonth() + 1) +"-"+ this.d.getFullYear()),
+    Match["equipo1"] = {[this.equipo1]:t1};
+    Match["equipo2"] = {[this.equipo2]:t2};
+
+    this.crudService.create_NewMatch(Match)
   }
       
 }

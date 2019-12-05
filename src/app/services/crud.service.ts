@@ -63,4 +63,8 @@ export class CrudService {
     ref.where('fecha', '==', this.d.getDate() +"-"+ 
     (this.d.getMonth() + 1) +"-"+ this.d.getFullYear()).where('equipo','==',equipo)).snapshotChanges();
   }
+
+  create_NewMatch(match) {
+    return this.firestore.collection('partidos').add(match);
+  }
 }
